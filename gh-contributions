@@ -14,20 +14,23 @@ contributions=($(gh api graphql -f query='{
     }
   }
 }' --cache 24h --jq '..|.contributionCount?'))
+weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
 
+color_number=5
 color_first=231
 color_decrement=6
 
 tput init
 
 for day in {0..6}; do
+    printf "%s${weekdays[$day]}" "$(tput setaf 255)"
     for week in {0..51}; do
-        number=contributions[$day+$week*7]
-        if (( number > 5 )); then
-            number=5
+        number="contributions[$day+$week*7]"
+        if (( number > color_number )); then
+            number=$color_number
         fi
         color=$(( color_first - number * color_decrement ))
-        printf "$(tput setaf $color)\U25a2 "
+        printf "%s\U25a2 " "$(tput setaf $color)"
     done
     printf "\n"
 done
