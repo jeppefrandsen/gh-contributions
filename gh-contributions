@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -e
+
+contributions=($(gh api graphql -f query='{
+  viewer {
+    contributionsCollection {
+      contributionCalendar {
+        weeks {
+          contributionDays {
+            contributionCount
+          }
+        }
+      }
+    }
+  }
+}' --cache 24h --jq '..|.contributionCount?'))
+
+color_first=231
+color_decrement=6
+
+tput init
+
+for day in {0..6}; do
+    for week in {0..51}; do
+        number=contributions[$day+$week*7]
+        if (( number > 5 )); then
+            number=5
+        fi
+        color=$(( color_first - number * color_decrement ))
+        printf "$(tput setaf $color)\U25a2 "
+    done
+    printf "\n"
+done
