@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+icon="\U25a9"
 color_text=255
 colors=(247 188 225 182 219 176 213 170 207 164 201)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
@@ -39,7 +40,7 @@ for day in {0..6}; do
         if (( "$number" >= "${#colors[@]}" )); then
             number=${colors[${#colors[@]}]}
         fi
-        printf "%s\U25a9 " "$(tput setaf "${colors[number]}")"
+        printf "%s$icon " "$(tput setaf "${colors[number]}")"
     done
     printf "\n"
 done
