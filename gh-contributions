@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 color_text=255
-colors=(250 225 224 219 218 213 212 207 206 201 200)
+colors=(249 188 225 182 219 176 213 170 207 164 201)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
 months=("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec")
 contributions=($(gh api graphql -f query='{
@@ -39,7 +39,7 @@ for day in {0..6}; do
         if (( "$number" >= "${#colors[@]}" )); then
             number=${colors[${#colors[@]}]}
         fi
-        printf "%s\U25a8 " "$(tput setaf ${colors[number]})"
+        printf "%s\U25a8 " "$(tput setaf "${colors[number]}")"
     done
     printf "\n"
 done
