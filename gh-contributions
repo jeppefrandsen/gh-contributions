@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-set -e
 
+color_text=255
+colors=(250 225 224 219 218 213 212 207 206 201 200)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
 months=("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec")
 contributions=($(gh api graphql -f query='{
@@ -17,15 +18,10 @@ contributions=($(gh api graphql -f query='{
   }
 }' --cache 24h --jq '..|.contributionCount?'))
 
-color_number=5
-color_first=231
-color_decrement=6
-color_text=255
-
 tput init
-
-printf "    "
 month_current=$(date +%m)
+printf "    "
+
 for month in {0..11}; do
     month_this=$(( month+month_current ))
     if (( month_this > 12 )); then
@@ -33,16 +29,17 @@ for month in {0..11}; do
     fi
     printf "%s${months[$month_this-1]}      " "$(tput setaf $color_text)"
 done
+
 printf "\n"
+
 for day in {0..6}; do
     printf "%s${weekdays[$day]} " "$(tput setaf $color_text)"
     for week in {0..51}; do
         number="contributions[$day+$week*7]"
-        if (( number > color_number )); then
-            number=$color_number
+        if (( "$number" >= "${#colors[@]}" )); then
+            number=${colors[${#colors[@]}]}
         fi
-        color=$(( color_first - number * color_decrement ))
-        printf "%s\U25a2 " "$(tput setaf $color)"
+        printf "%s\U25a8 " "$(tput setaf ${colors[number]})"
     done
     printf "\n"
 done
