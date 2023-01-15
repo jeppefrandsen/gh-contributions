@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-icon="\U25a9"
+icon="\u25a9"
 color_text=255
 colors=(247 188 225 182 219 176 213 170 207 164 201)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
 months=("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec")
-contributions=($(gh api graphql -f query='{
+contributions=($(gh api graphql --cache 24h --jq '..|.contributionCount?' -f query='{
   viewer {
     contributionsCollection {
       contributionCalendar {
@@ -18,7 +18,7 @@ contributions=($(gh api graphql -f query='{
       }
     }
   }
-}' --cache 24h --jq '..|.contributionCount?'))
+}'))
 
 tput init
 month_current=$(date +%m)
