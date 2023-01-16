@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-icon="\u25a9"
+icon="▩"
 color_text=255
 colors=(247 188 225 182 219 176 213 170 207 164 201)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
@@ -25,11 +25,11 @@ month_current=$(date +%m)
 printf "    "
 
 for month in {0..11}; do
-  month_this=$(( month+month_current ))
-  if (( month_this > 12 )); then
-    month_this=$(( month_this-12 ))
+  _month=$(( month+month_current ))
+  if (( _month > 12 )); then
+    _month=$(( _month-12 ))
   fi
-  printf "%s${months[$month_this-1]}      " "$(tput setaf $color_text)"
+  printf "%s${months[$_month-1]}      " "$(tput setaf $color_text)"
 done
 
 printf "\n"
@@ -37,11 +37,11 @@ printf "\n"
 for day in {0..6}; do
   printf "%s${weekdays[$day]} " "$(tput setaf $color_text)"
   for week in {0..51}; do
-    number="contributions[$day+$week*7]"
-    if (( "$number" >= "${#colors[@]}" )); then
-      number=${colors[${#colors[@]}]}
+    _number="contributions[$day+$week*7]"
+    if (( "$_number" >= "${#colors[@]}" )); then
+      _number=${colors[${#colors[@]}]}
     fi
-    printf "%s$icon " "$(tput setaf "${colors[number]}")"
+    printf "%s$icon " "$(tput setaf "${colors[_number]}")"
   done
   printf "\n"
 done
