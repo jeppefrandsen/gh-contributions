@@ -6,10 +6,11 @@ A small [GitHub CLI](https://cli.github.com/) extention for showing your contrib
 
 ## Installing
 
-Just install [GitHub CLI](https://cli.github.com/) and run:
+Install and test with the following commands:
 
 ```
 gh extension install jeppefrandsen/gh-contributions
+gh contributions
 ```
 
 ## Modifying

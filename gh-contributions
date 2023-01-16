@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-icon="▩"
+icon="▨"
 color_text=255
 colors=(247 188 225 182 219 176 213 170 207 164 201)
 weekdays=("Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat")
